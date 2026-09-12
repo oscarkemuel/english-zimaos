@@ -1,0 +1,39 @@
+services:
+  server:
+    build:
+      context: ./server
+    container_name: curso-server
+    environment:
+      VIDEOS_DIR: /app/videos
+      BACKUP_FILE: /app/data/backup.json
+    volumes:
+      - /DATA/.media/HDD01/English/videos:/app/videos:ro
+      - ./backup.json:/app/data/backup.json
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+    container_name: curso-web
+    ports:
+      - "7777:80"
+    volumes:
+      - ./web/public/curso_ingles.json:/usr/share/nginx/html/curso_ingles.json:ro
+    depends_on:
+      - server
+    restart: unless-stopped
+
+  generator:
+    build:
+      context: ./server
+    container_name: curso-generator
+    environment:
+      VIDEOS_DIR: /app/videos
+      SERVER_URL: /videos
+      JSON_OUTPUT: /app/output/curso_ingles.json
+    volumes:
+      - /DATA/.media/HDD01/English/videos:/app/videos
+      - ./web/public:/app/output
+    command: ["node", "dist/generateJson.cjs"]
+    profiles:
+      - tools
