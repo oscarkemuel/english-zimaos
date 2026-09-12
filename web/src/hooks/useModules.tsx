@@ -132,7 +132,7 @@ export function ModulesProvider({ children }: IModulesProvider) {
     saveLastModuleWatched({ module, stage });
 
     toast.success(
-      `Vídeo ${watchedVideos.includes(videoId) ? "desmarcado" : "marcado"} como assistido!`,
+      `Video ${watchedVideos.includes(videoId) ? "unmarked" : "marked"} as watched!`,
       {
         richColors: true,
       },
@@ -214,7 +214,7 @@ export function ModulesProvider({ children }: IModulesProvider) {
     saveLastModuleWatched({ module: String(moduleId), stage: String(stageId) });
     saveActivity("video");
 
-    toast.success("Todos os vídeos do módulo marcados como assistidos!", {
+    toast.success("All videos in the module marked as watched!", {
       richColors: true,
     });
 
@@ -258,7 +258,7 @@ export function ModulesProvider({ children }: IModulesProvider) {
     fetch("/curso_ingles.json")
       .then((response) => response.json())
       .then((data) => setStages(data))
-      .catch((error) => console.error("Erro ao carregar JSON:", error));
+      .catch((error) => console.error("Error loading JSON:", error));
   }, []);
 
   return (

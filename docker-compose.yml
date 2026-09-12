@@ -18,7 +18,7 @@ services:
     ports:
       - "7777:80"
     volumes:
-      - ./web/public/curso_ingles.json:/usr/share/nginx/html/curso_ingles.json:ro
+      - ./web/public:/usr/share/nginx/html/public-data:ro
     depends_on:
       - server
     restart: unless-stopped

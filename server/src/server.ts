@@ -51,6 +51,26 @@ fastify.post('/backup', async (request, reply) => {
   }
 });
 
+fastify.get("/backup", async (_request, reply) => {
+  try {
+    if (!fs.existsSync(BACKUP_FILE)) {
+      return reply.send({});
+    }
+
+    const content = fs.readFileSync(BACKUP_FILE, "utf-8");
+    const data = JSON.parse(content);
+
+    return reply.send(data);
+  } catch (err) {
+    fastify.log.error(err);
+
+    return reply.status(500).send({
+      success: false,
+      error: "Failed to load backup",
+    });
+  }
+});
+
 
 const start = async () => {
   try {

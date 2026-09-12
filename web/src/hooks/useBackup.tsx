@@ -40,35 +40,34 @@ const useBackup = () => {
     });
   };
 
-  const loadBackupFromFile = (file: File) => {
-    const reader = new FileReader();
+  const loadBackupFromServer = async () => {
+    try {
+      const response = await fetch("/backup");
 
-    reader.onload = (event) => {
-      try {
-        const content = event.target?.result as string;
-        const data: Record<string, string | null> = JSON.parse(content);
-
-        localStorage.clear();
-
-        Object.entries(data).forEach(([key, value]) => {
-          if (value !== null) {
-            localStorage.setItem(key, value);
-          }
-        });
-
-        window.location.reload();
-      } catch (err) {
-        console.error("Arquivo inválido", err);
+      if (!response.ok) {
+        throw new Error("Erro ao buscar backup");
       }
-    };
 
-    reader.readAsText(file);
+      const data: Record<string, string | null> = await response.json();
+
+      localStorage.clear();
+
+      Object.entries(data).forEach(([key, value]) => {
+        if (value !== null) {
+          localStorage.setItem(key, value);
+        }
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro on load backup:", error);
+    }
   };
 
   return {
     backupLocalStorage,
-    loadBackupFromFile,
     sendStatsToGoogleSheet,
+    loadBackupFromServer,
   };
 };
 

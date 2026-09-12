@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import useBackup from "@/hooks/useBackup";
-import { Upload } from "lucide-react";
-import { useRef } from "react";
+import { RefreshCcw } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -9,8 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function UploadBackup() {
-  const { loadBackupFromFile } = useBackup();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { loadBackupFromServer } = useBackup();
 
   return (
     <Tooltip>
@@ -18,26 +16,13 @@ export default function UploadBackup() {
         <Button
           variant="outline"
           size="icon"
-          aria-label="Upload Backup"
-          onClick={() => fileInputRef.current?.click()}
+          aria-label="Synchronize data"
+          onClick={loadBackupFromServer}
         >
-          <Upload className="h-5 w-5" />
-
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                loadBackupFromFile(file);
-              }
-            }}
-          />
+          <RefreshCcw className="h-5 w-5" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent side="left">Upload Backup</TooltipContent>
+      <TooltipContent side="left">Synchronize Data</TooltipContent>
     </Tooltip>
   );
 }
