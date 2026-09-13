@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8 w-full">
-      <div className="flex justify-between bg-linear-to-r from-zinc-950 to-zinc-900/50 p-6 rounded-2xl border border-zinc-800 shadow-sm">
+      <div className="flex justify-between bg-linear-to-r from-zinc-950 to-zinc-900/50 p-6 rounded-2xl border border-zinc-800 shadow-sm sm:flex-row flex-col gap-6 sm:gap-0 items-center sm:items-start">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 ">
           <Avatar className="h-20 w-20 sm:h-24 sm:w-24 border-4 border-zinc-900 shadow-lg">
             <AvatarImage
