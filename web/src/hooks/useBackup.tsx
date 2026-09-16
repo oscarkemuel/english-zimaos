@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 const useBackup = () => {
   const sendStatsToGoogleSheet = (stats: {
     currentStreak: number;
@@ -26,12 +28,13 @@ const useBackup = () => {
 
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
+
       if (key) {
         data[key] = localStorage.getItem(key);
       }
     }
 
-    fetch(`/backup`, {
+    fetch("/backup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +43,7 @@ const useBackup = () => {
     });
   };
 
-  const loadBackupFromServer = async () => {
+  const loadBackupFromServer = useCallback(async () => {
     try {
       const response = await fetch("/backup");
 
@@ -50,19 +53,15 @@ const useBackup = () => {
 
       const data: Record<string, string | null> = await response.json();
 
-      localStorage.clear();
-
       Object.entries(data).forEach(([key, value]) => {
         if (value !== null) {
           localStorage.setItem(key, value);
         }
       });
-
-      window.location.reload();
     } catch (error) {
       console.error("Erro on load backup:", error);
     }
-  };
+  }, []);
 
   return {
     backupLocalStorage,
