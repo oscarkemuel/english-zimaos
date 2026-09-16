@@ -14,6 +14,8 @@ services:
   web:
     build:
       context: ./web
+      args:
+        VITE_SCRIPT_GOOGLE_APP: ${VITE_SCRIPT_GOOGLE_APP}
     container_name: curso-web
     ports:
       - "7777:80"

@@ -4,14 +4,23 @@ import StreakStatsCard from "./-components/StreakStatsCard";
 import ContinueLearningCard from "./-components/ContinueLearningCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { USER } from "@/utils/constants";
-import UploadBackup from "./-components/UploadBackup";
+// import UploadBackup from "./-components/UploadBackup";
 import PlaylistButton from "./-components/PlaylistButton";
+import useBackup from "@/hooks/useBackup";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
+  const { loadBackupFromServer } = useBackup();
+
+  useEffect(() => {
+    loadBackupFromServer();
+  }, [loadBackupFromServer]);
+  
+
   return (
     <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8 w-full">
       <div className="flex justify-between bg-linear-to-r from-zinc-950 to-zinc-900/50 p-6 rounded-2xl border border-zinc-800 shadow-sm sm:flex-row flex-col gap-6 sm:gap-0 items-center sm:items-start">
@@ -39,7 +48,7 @@ function Index() {
         </div>
 
         <div className="flex gap-4">
-          <UploadBackup />
+          {/* <UploadBackup /> */}
 
           <PlaylistButton />
         </div>
