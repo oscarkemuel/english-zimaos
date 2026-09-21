@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 const useBackup = () => {
   const isDevelopment = import.meta.env.MODE !== "production";
+  const backupEndpoint = isDevelopment ? "http://localhost:8888/backup" : "/backup";
 
   const sendStatsToGoogleSheet = (stats: {
     currentStreak: number;
@@ -36,7 +37,7 @@ const useBackup = () => {
       }
     }
 
-    fetch(`${isDevelopment && "http://localhost:8888"}/backup`, {
+    fetch(backupEndpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +48,7 @@ const useBackup = () => {
 
   const loadBackupFromServer = useCallback(async () => {
     try {
-      const response = await fetch(`${isDevelopment && "http://localhost:8888"}/backup`);
+      const response = await fetch(backupEndpoint);
 
       if (!response.ok) {
         throw new Error("Erro ao buscar backup");
