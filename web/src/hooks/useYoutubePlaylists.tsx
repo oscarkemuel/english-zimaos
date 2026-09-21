@@ -153,6 +153,7 @@ const useYoutubePlaylists = () => {
             videoId,
           ];
 
+    saveActivity("youtube_video");
     setStoredWatched({
       ...watched,
 
@@ -161,7 +162,6 @@ const useYoutubePlaylists = () => {
     });
 
     backupLocalStorage();
-    saveActivity("youtube_video");
   };
 
   const getWatchedCount = (
