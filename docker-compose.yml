@@ -16,6 +16,7 @@ services:
       context: ./web
       args:
         VITE_SCRIPT_GOOGLE_APP: ${VITE_SCRIPT_GOOGLE_APP}
+        VITE_YOUTUBE_API_KEY: ${VITE_YOUTUBE_API_KEY}
     container_name: curso-web
     ports:
       - "7777:80"

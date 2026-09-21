@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlaylistRouteImport } from './routes/playlist'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as YoutubeIndexRouteImport } from './routes/youtube/index'
 import { Route as StagesIndexRouteImport } from './routes/stages/index'
 import { Route as StagesStageIndexRouteImport } from './routes/stages/$stage/index'
 import { Route as StagesStageModuleModuleRouteImport } from './routes/stages/$stage/module/$module'
@@ -23,6 +24,11 @@ const PlaylistRoute = PlaylistRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YoutubeIndexRoute = YoutubeIndexRouteImport.update({
+  id: '/youtube/',
+  path: '/youtube/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StagesIndexRoute = StagesIndexRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/playlist': typeof PlaylistRoute
   '/stages/': typeof StagesIndexRoute
+  '/youtube/': typeof YoutubeIndexRoute
   '/stages/$stage/': typeof StagesStageIndexRoute
   '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/playlist': typeof PlaylistRoute
   '/stages': typeof StagesIndexRoute
+  '/youtube': typeof YoutubeIndexRoute
   '/stages/$stage': typeof StagesStageIndexRoute
   '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/playlist': typeof PlaylistRoute
   '/stages/': typeof StagesIndexRoute
+  '/youtube/': typeof YoutubeIndexRoute
   '/stages/$stage/': typeof StagesStageIndexRoute
   '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
 }
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
     | '/'
     | '/playlist'
     | '/stages/'
+    | '/youtube/'
     | '/stages/$stage/'
     | '/stages/$stage/module/$module'
   fileRoutesByTo: FileRoutesByTo
@@ -76,6 +86,7 @@ export interface FileRouteTypes {
     | '/'
     | '/playlist'
     | '/stages'
+    | '/youtube'
     | '/stages/$stage'
     | '/stages/$stage/module/$module'
   id:
@@ -83,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/playlist'
     | '/stages/'
+    | '/youtube/'
     | '/stages/$stage/'
     | '/stages/$stage/module/$module'
   fileRoutesById: FileRoutesById
@@ -91,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PlaylistRoute: typeof PlaylistRoute
   StagesIndexRoute: typeof StagesIndexRoute
+  YoutubeIndexRoute: typeof YoutubeIndexRoute
   StagesStageIndexRoute: typeof StagesStageIndexRoute
   StagesStageModuleModuleRoute: typeof StagesStageModuleModuleRoute
 }
@@ -109,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/youtube/': {
+      id: '/youtube/'
+      path: '/youtube'
+      fullPath: '/youtube/'
+      preLoaderRoute: typeof YoutubeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stages/': {
@@ -139,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlaylistRoute: PlaylistRoute,
   StagesIndexRoute: StagesIndexRoute,
+  YoutubeIndexRoute: YoutubeIndexRoute,
   StagesStageIndexRoute: StagesStageIndexRoute,
   StagesStageModuleModuleRoute: StagesStageModuleModuleRoute,
 }

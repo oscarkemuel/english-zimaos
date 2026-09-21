@@ -15,7 +15,6 @@ function RouteComponent() {
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
-  const stageName = "Playlist";
   const currentTrack = currentIndex !== null ? playlist[currentIndex] : null;
 
   const handleBack = () => {
@@ -57,7 +56,7 @@ function RouteComponent() {
               <Home className="w-4 h-4 mr-2" /> Back to Home
             </Button>
             <h1 className="text-3xl font-bold tracking-tight text-zinc-50">
-              {stageName}
+              Audio Playlist Player
             </h1>
             <p className="text-zinc-400">
               This is where your audio playlist will be displayed. You can

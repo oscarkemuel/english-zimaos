@@ -4,10 +4,10 @@ import StreakStatsCard from "./-components/StreakStatsCard";
 import ContinueLearningCard from "./-components/ContinueLearningCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { USER } from "@/utils/constants";
-// import UploadBackup from "./-components/UploadBackup";
 import PlaylistButton from "./-components/PlaylistButton";
 import useBackup from "@/hooks/useBackup";
 import { useEffect } from "react";
+import YoutubeButton from "./-components/YoutubeButton";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -41,14 +41,13 @@ function Index() {
               Welcome back, {USER.firstName}! <span>👋</span>
             </p>
             <p className="text-zinc-400 text-sm sm:text-base mt-2">
-              Ready to keep your offensive streak going? Continue from where you
-              left off and reach your goals today.
+              Listen to your Audio playlists and keep track of your progress.
             </p>
           </div>
         </div>
 
         <div className="flex gap-4">
-          {/* <UploadBackup /> */}
+          <YoutubeButton />
 
           <PlaylistButton />
         </div>

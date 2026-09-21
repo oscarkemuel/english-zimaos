@@ -2,7 +2,7 @@ import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import useLocalStorage from "./useLocalStorage";
 import useBackup from "./useBackup";
 
-export type ActivityType = "audio" | "video" | "reading";
+export type ActivityType = "audio" | "video" | "reading" | "youtube_video";
 export interface ActivityEntry {
   date: string;
   count: number;

@@ -4,6 +4,8 @@ export const LOCAL_STORAGE_KEYS = {
   LAST_MODULE_WATCHED: `${LOCAL_STORAGE_PREFIX}last_module_watched`,
   WATCHED_VIDEOS: `${LOCAL_STORAGE_PREFIX}watched_videos`,
   AUDIO_PLAYLIST: `${LOCAL_STORAGE_PREFIX}audio_playlist`,
+  YOUTUBE_PLAYLISTS: `${LOCAL_STORAGE_PREFIX}youtube_playlists`,
+  YOUTUBE_WATCHED_VIDEOS: `${LOCAL_STORAGE_PREFIX}youtube_watched_videos`
 };
 
 export const USER = {

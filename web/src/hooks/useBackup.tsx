@@ -1,12 +1,14 @@
 import { useCallback } from "react";
 
 const useBackup = () => {
+  const isDevelopment = import.meta.env.MODE !== "production";
+
   const sendStatsToGoogleSheet = (stats: {
     currentStreak: number;
     maxStreak: number;
     lastActivityDate?: string;
   }) => {
-    if (import.meta.env.MODE !== "production") {
+    if (isDevelopment) {
       return;
     }
 
@@ -20,7 +22,7 @@ const useBackup = () => {
   };
 
   const backupLocalStorage = () => {
-    if (import.meta.env.MODE !== "production") {
+    if (isDevelopment) {
       return;
     }
 
@@ -34,7 +36,7 @@ const useBackup = () => {
       }
     }
 
-    fetch("/backup", {
+    fetch(`${isDevelopment && "http://localhost:8888"}/backup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +47,7 @@ const useBackup = () => {
 
   const loadBackupFromServer = useCallback(async () => {
     try {
-      const response = await fetch("/backup");
+      const response = await fetch(`${isDevelopment && "http://localhost:8888"}/backup`);
 
       if (!response.ok) {
         throw new Error("Erro ao buscar backup");
@@ -61,6 +63,7 @@ const useBackup = () => {
     } catch (error) {
       console.error("Erro on load backup:", error);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

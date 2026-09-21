@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { MonitorPlay } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 
-export default function PlaylistButton() {
+export default function YoutubeButton() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate({ to: "/playlist" });
+    navigate({ to: "/youtube" });
   }
 
   return (
@@ -20,13 +20,13 @@ export default function PlaylistButton() {
           <Button
             variant="outline"
             size="icon"
-            aria-label="Audio Playlist"
+            aria-label="Youtube Playlist"
             onClick={handleClick}
           >
-            <Play className="h-5 w-5" color="#fff" />
+            <MonitorPlay className="h-5 w-5" color="#fff" />
           </Button>
       </TooltipTrigger>
-      <TooltipContent side="bottom">Audio Playlist</TooltipContent>
+      <TooltipContent side="bottom">Youtube Playlist</TooltipContent>
     </Tooltip>
   );
 }
