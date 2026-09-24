@@ -56,6 +56,11 @@ const useBackup = () => {
 
       const data: Record<string, string | null> = await response.json();
 
+      if (Object.keys(data).length === 0) {
+        localStorage.clear();
+        return;
+      }
+
       Object.entries(data).forEach(([key, value]) => {
         if (value !== null) {
           localStorage.setItem(key, value);
