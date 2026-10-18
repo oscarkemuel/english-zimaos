@@ -23,9 +23,14 @@ const useLocalStorage = (key: string, initialValue: any) => {
     }
   };
 
+  const clearAllStorage = () => {
+    window.localStorage.clear()
+  }
+
   return [
     storedValue,
     setValue,
+    clearAllStorage
   ];
 };
 

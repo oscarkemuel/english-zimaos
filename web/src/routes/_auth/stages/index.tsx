@@ -9,7 +9,7 @@ import { BookOpen, Home } from "lucide-react";
 import { useModules } from "@/hooks/useModules";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/stages/")({
+export const Route = createFileRoute("/_auth/stages/")({
   component: Stages,
 });
 

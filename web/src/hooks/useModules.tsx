@@ -255,6 +255,24 @@ export function ModulesProvider({ children }: IModulesProvider) {
   };
 
   useEffect(() => {
+    const handleBackupLoaded = () => {
+      const storedVideos = localStorage.getItem(WATCHED_VIDEOS);
+      if (storedVideos) {
+        try {
+          setWatchedVideos(JSON.parse(storedVideos));
+        } catch (e) {
+          console.error("Error on parse stored videos", e);
+        }
+      } else {
+        setWatchedVideos([]);
+      }
+    };
+
+    window.addEventListener("backup-loaded", handleBackupLoaded);
+    return () => window.removeEventListener("backup-loaded", handleBackupLoaded);
+  }, [WATCHED_VIDEOS, setWatchedVideos]);
+
+  useEffect(() => {
     fetch("/curso_ingles.json")
       .then((response) => response.json())
       .then((data) => setStages(data))

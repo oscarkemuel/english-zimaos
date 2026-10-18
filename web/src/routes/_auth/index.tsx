@@ -1,25 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
-import StreakCalendar from "./-components/StreakCalendar";
-import StreakStatsCard from "./-components/StreakStatsCard";
-import ContinueLearningCard from "./-components/ContinueLearningCard";
+import StreakCalendar from "../-components/StreakCalendar";
+import StreakStatsCard from "../-components/StreakStatsCard";
+import ContinueLearningCard from "../-components/ContinueLearningCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { USER } from "@/utils/constants";
-import PlaylistButton from "./-components/PlaylistButton";
+import PlaylistButton from "../-components/PlaylistButton";
 import useBackup from "@/hooks/useBackup";
-import { useEffect } from "react";
-import YoutubeButton from "./-components/YoutubeButton";
+import { useEffect, useState } from "react";
+import YoutubeButton from "../-components/YoutubeButton";
+import { useAuthContext } from "@/contexts/auth";
+import LogoutButton from "../-components/LogoutButton";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_auth/")({
   component: Index,
 });
 
 function Index() {
+  const { user } = useAuthContext()
   const { loadBackupFromServer } = useBackup();
+  const [isLoadingBackup, setIsLoadingBackup] = useState(true);
 
   useEffect(() => {
-    loadBackupFromServer();
+    let isMounted = true;
+
+    async function handleBackup() {
+      try {
+        await loadBackupFromServer();
+      } finally {
+        if (isMounted) {
+          setIsLoadingBackup(false);
+        }
+      }
+    }
+
+    void handleBackup();
+
+    return () => {
+      isMounted = false;
+    };
   }, [loadBackupFromServer]);
-  
+
+  if (isLoadingBackup) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto flex items-center justify-center min-h-100">
+        <p className="text-zinc-400 animate-pulse">Syncing data...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8 w-full">
@@ -27,18 +53,18 @@ function Index() {
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 ">
           <Avatar className="h-20 w-20 sm:h-24 sm:w-24 border-4 border-zinc-900 shadow-lg">
             <AvatarImage
-              src={USER.avatarUrl}
-              alt={USER.name}
+              src={user!.profile}
+              alt={user!.name}
               className="object-cover"
             />
             <AvatarFallback className="bg-zinc-800 text-zinc-300 text-2xl font-bold">
-              {USER.firstName.charAt(0)}
+              {user!.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
 
           <div className="flex flex-col text-center sm:text-left justify-center pt-1 sm:pt-3">
             <p className="text-2xl sm:text-3xl font-bold text-zinc-50 tracking-tight flex items-center justify-center sm:justify-start gap-2">
-              Welcome back, {USER.firstName}! <span>👋</span>
+              Welcome back, {user!.name}! <span>👋</span>
             </p>
             <p className="text-zinc-400 text-sm sm:text-base mt-2">
               Listen to your Audio playlists and keep track of your progress.
@@ -50,6 +76,8 @@ function Index() {
           <YoutubeButton />
 
           <PlaylistButton />
+
+          <LogoutButton />
         </div>
       </div>
 

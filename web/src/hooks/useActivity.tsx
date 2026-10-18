@@ -1,6 +1,7 @@
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import useLocalStorage from "./useLocalStorage";
 import useBackup from "./useBackup";
+import { useAuthContext } from "@/contexts/auth";
 
 export type ActivityType = "audio" | "video" | "reading" | "youtube_video";
 export interface ActivityEntry {
@@ -13,6 +14,7 @@ export interface ActivityEntry {
 const useActivity = () => {
   const { ACTIVITY, LAST_MODULE_WATCHED } = LOCAL_STORAGE_KEYS;
   const { sendStatsToGoogleSheet } = useBackup();
+  const { user } = useAuthContext();
   const [activity, setActivity] = useLocalStorage(ACTIVITY, []);
   const [lastModuleWatched, setLastModuleWatched] = useLocalStorage(
     LAST_MODULE_WATCHED,
@@ -57,7 +59,7 @@ const useActivity = () => {
     }
 
     setActivity(activityData);
-    if (!todayActivity) {
+    if (!todayActivity && user!.id === 'oscar') {
       const data = getConsecutiveDays(activityData);
       sendStatsToGoogleSheet(data);
     }

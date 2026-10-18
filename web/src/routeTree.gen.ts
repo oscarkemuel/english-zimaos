@@ -9,73 +9,90 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PlaylistRouteImport } from './routes/playlist'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as YoutubeIndexRouteImport } from './routes/youtube/index'
-import { Route as StagesIndexRouteImport } from './routes/stages/index'
-import { Route as StagesStageIndexRouteImport } from './routes/stages/$stage/index'
-import { Route as StagesStageModuleModuleRouteImport } from './routes/stages/$stage/module/$module'
+import { Route as ProfilesRouteImport } from './routes/profiles'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthIndexRouteImport } from './routes/_auth/index'
+import { Route as AuthPlaylistRouteImport } from './routes/_auth/playlist'
+import { Route as AuthYoutubeIndexRouteImport } from './routes/_auth/youtube/index'
+import { Route as AuthStagesIndexRouteImport } from './routes/_auth/stages/index'
+import { Route as AuthStagesStageIndexRouteImport } from './routes/_auth/stages/$stage/index'
+import { Route as AuthStagesStageModuleModuleRouteImport } from './routes/_auth/stages/$stage/module/$module'
 
-const PlaylistRoute = PlaylistRouteImport.update({
-  id: '/playlist',
-  path: '/playlist',
+const ProfilesRoute = ProfilesRouteImport.update({
+  id: '/profiles',
+  path: '/profiles',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
-const YoutubeIndexRoute = YoutubeIndexRouteImport.update({
+const AuthPlaylistRoute = AuthPlaylistRouteImport.update({
+  id: '/playlist',
+  path: '/playlist',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthYoutubeIndexRoute = AuthYoutubeIndexRouteImport.update({
   id: '/youtube/',
   path: '/youtube/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
-const StagesIndexRoute = StagesIndexRouteImport.update({
+const AuthStagesIndexRoute = AuthStagesIndexRouteImport.update({
   id: '/stages/',
   path: '/stages/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
-const StagesStageIndexRoute = StagesStageIndexRouteImport.update({
+const AuthStagesStageIndexRoute = AuthStagesStageIndexRouteImport.update({
   id: '/stages/$stage/',
   path: '/stages/$stage/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
-const StagesStageModuleModuleRoute = StagesStageModuleModuleRouteImport.update({
-  id: '/stages/$stage/module/$module',
-  path: '/stages/$stage/module/$module',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthStagesStageModuleModuleRoute =
+  AuthStagesStageModuleModuleRouteImport.update({
+    id: '/stages/$stage/module/$module',
+    path: '/stages/$stage/module/$module',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/playlist': typeof PlaylistRoute
-  '/stages/': typeof StagesIndexRoute
-  '/youtube/': typeof YoutubeIndexRoute
-  '/stages/$stage/': typeof StagesStageIndexRoute
-  '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
+  '/': typeof AuthIndexRoute
+  '/profiles': typeof ProfilesRoute
+  '/playlist': typeof AuthPlaylistRoute
+  '/stages/': typeof AuthStagesIndexRoute
+  '/youtube/': typeof AuthYoutubeIndexRoute
+  '/stages/$stage/': typeof AuthStagesStageIndexRoute
+  '/stages/$stage/module/$module': typeof AuthStagesStageModuleModuleRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/playlist': typeof PlaylistRoute
-  '/stages': typeof StagesIndexRoute
-  '/youtube': typeof YoutubeIndexRoute
-  '/stages/$stage': typeof StagesStageIndexRoute
-  '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
+  '/profiles': typeof ProfilesRoute
+  '/playlist': typeof AuthPlaylistRoute
+  '/': typeof AuthIndexRoute
+  '/stages': typeof AuthStagesIndexRoute
+  '/youtube': typeof AuthYoutubeIndexRoute
+  '/stages/$stage': typeof AuthStagesStageIndexRoute
+  '/stages/$stage/module/$module': typeof AuthStagesStageModuleModuleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/playlist': typeof PlaylistRoute
-  '/stages/': typeof StagesIndexRoute
-  '/youtube/': typeof YoutubeIndexRoute
-  '/stages/$stage/': typeof StagesStageIndexRoute
-  '/stages/$stage/module/$module': typeof StagesStageModuleModuleRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/profiles': typeof ProfilesRoute
+  '/_auth/playlist': typeof AuthPlaylistRoute
+  '/_auth/': typeof AuthIndexRoute
+  '/_auth/stages/': typeof AuthStagesIndexRoute
+  '/_auth/youtube/': typeof AuthYoutubeIndexRoute
+  '/_auth/stages/$stage/': typeof AuthStagesStageIndexRoute
+  '/_auth/stages/$stage/module/$module': typeof AuthStagesStageModuleModuleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/profiles'
     | '/playlist'
     | '/stages/'
     | '/youtube/'
@@ -83,85 +100,114 @@ export interface FileRouteTypes {
     | '/stages/$stage/module/$module'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/profiles'
     | '/playlist'
+    | '/'
     | '/stages'
     | '/youtube'
     | '/stages/$stage'
     | '/stages/$stage/module/$module'
   id:
     | '__root__'
-    | '/'
-    | '/playlist'
-    | '/stages/'
-    | '/youtube/'
-    | '/stages/$stage/'
-    | '/stages/$stage/module/$module'
+    | '/_auth'
+    | '/profiles'
+    | '/_auth/playlist'
+    | '/_auth/'
+    | '/_auth/stages/'
+    | '/_auth/youtube/'
+    | '/_auth/stages/$stage/'
+    | '/_auth/stages/$stage/module/$module'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PlaylistRoute: typeof PlaylistRoute
-  StagesIndexRoute: typeof StagesIndexRoute
-  YoutubeIndexRoute: typeof YoutubeIndexRoute
-  StagesStageIndexRoute: typeof StagesStageIndexRoute
-  StagesStageModuleModuleRoute: typeof StagesStageModuleModuleRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  ProfilesRoute: typeof ProfilesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/playlist': {
-      id: '/playlist'
-      path: '/playlist'
-      fullPath: '/playlist'
-      preLoaderRoute: typeof PlaylistRouteImport
+    '/profiles': {
+      id: '/profiles'
+      path: '/profiles'
+      fullPath: '/profiles'
+      preLoaderRoute: typeof ProfilesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/youtube/': {
-      id: '/youtube/'
+    '/_auth/playlist': {
+      id: '/_auth/playlist'
+      path: '/playlist'
+      fullPath: '/playlist'
+      preLoaderRoute: typeof AuthPlaylistRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/youtube/': {
+      id: '/_auth/youtube/'
       path: '/youtube'
       fullPath: '/youtube/'
-      preLoaderRoute: typeof YoutubeIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthYoutubeIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/stages/': {
-      id: '/stages/'
+    '/_auth/stages/': {
+      id: '/_auth/stages/'
       path: '/stages'
       fullPath: '/stages/'
-      preLoaderRoute: typeof StagesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthStagesIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/stages/$stage/': {
-      id: '/stages/$stage/'
+    '/_auth/stages/$stage/': {
+      id: '/_auth/stages/$stage/'
       path: '/stages/$stage'
       fullPath: '/stages/$stage/'
-      preLoaderRoute: typeof StagesStageIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthStagesStageIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
-    '/stages/$stage/module/$module': {
-      id: '/stages/$stage/module/$module'
+    '/_auth/stages/$stage/module/$module': {
+      id: '/_auth/stages/$stage/module/$module'
       path: '/stages/$stage/module/$module'
       fullPath: '/stages/$stage/module/$module'
-      preLoaderRoute: typeof StagesStageModuleModuleRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthStagesStageModuleModuleRouteImport
+      parentRoute: typeof AuthRoute
     }
   }
 }
 
+interface AuthRouteChildren {
+  AuthPlaylistRoute: typeof AuthPlaylistRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+  AuthStagesIndexRoute: typeof AuthStagesIndexRoute
+  AuthYoutubeIndexRoute: typeof AuthYoutubeIndexRoute
+  AuthStagesStageIndexRoute: typeof AuthStagesStageIndexRoute
+  AuthStagesStageModuleModuleRoute: typeof AuthStagesStageModuleModuleRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthPlaylistRoute: AuthPlaylistRoute,
+  AuthIndexRoute: AuthIndexRoute,
+  AuthStagesIndexRoute: AuthStagesIndexRoute,
+  AuthYoutubeIndexRoute: AuthYoutubeIndexRoute,
+  AuthStagesStageIndexRoute: AuthStagesStageIndexRoute,
+  AuthStagesStageModuleModuleRoute: AuthStagesStageModuleModuleRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  PlaylistRoute: PlaylistRoute,
-  StagesIndexRoute: StagesIndexRoute,
-  YoutubeIndexRoute: YoutubeIndexRoute,
-  StagesStageIndexRoute: StagesStageIndexRoute,
-  StagesStageModuleModuleRoute: StagesStageModuleModuleRoute,
+  AuthRoute: AuthRouteWithChildren,
+  ProfilesRoute: ProfilesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

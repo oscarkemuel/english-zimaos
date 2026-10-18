@@ -5,11 +5,6 @@ export const LOCAL_STORAGE_KEYS = {
   WATCHED_VIDEOS: `${LOCAL_STORAGE_PREFIX}watched_videos`,
   AUDIO_PLAYLIST: `${LOCAL_STORAGE_PREFIX}audio_playlist`,
   YOUTUBE_PLAYLISTS: `${LOCAL_STORAGE_PREFIX}youtube_playlists`,
-  YOUTUBE_WATCHED_VIDEOS: `${LOCAL_STORAGE_PREFIX}youtube_watched_videos`
+  YOUTUBE_WATCHED_VIDEOS: `${LOCAL_STORAGE_PREFIX}youtube_watched_videos`,
+  USER: `${LOCAL_STORAGE_PREFIX}user`
 };
-
-export const USER = {
-  name: "Oscar Kemuel",
-  firstName: "Oscar",
-  avatarUrl: "https://github.com/oscarkemuel.png",
-}

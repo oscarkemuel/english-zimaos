@@ -1,8 +1,13 @@
 import { useCallback } from "react";
+import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
+import type { IBackupResponse } from "@/types/backup";
+import { useAuthContext } from "@/contexts/auth";
 
 const useBackup = () => {
+  const { USER: userKey } = LOCAL_STORAGE_KEYS;
+  const { user } = useAuthContext();
   const isDevelopment = import.meta.env.MODE !== "production";
-  const backupEndpoint = isDevelopment ? "http://localhost:8888/backup" : "/backup";
+  const backupEndpoint = isDevelopment ? `http://localhost:8888/backup/${user!.id}` : `/backup/${user!.id}`;
 
   const sendStatsToGoogleSheet = (stats: {
     currentStreak: number;
@@ -23,10 +28,6 @@ const useBackup = () => {
   };
 
   const backupLocalStorage = () => {
-    if (isDevelopment) {
-      return;
-    }
-
     const data: Record<string, string | null> = {};
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -54,18 +55,20 @@ const useBackup = () => {
         throw new Error("Erro ao buscar backup");
       }
 
-      const data: Record<string, string | null> = await response.json();
+      const data: IBackupResponse = await response.json();
 
-      if (Object.keys(data).length === 0) {
+      if (Object.keys(data.backup).length === 0) {
         localStorage.clear();
         return;
       }
-
-      Object.entries(data).forEach(([key, value]) => {
+      Object.entries(data.backup).forEach(([key, value]) => {
         if (value !== null) {
           localStorage.setItem(key, value);
         }
       });
+
+      localStorage.setItem(userKey, JSON.stringify(data.user));
+      window.dispatchEvent(new Event("backup-loaded"));
     } catch (error) {
       console.error("Erro on load backup:", error);
     }

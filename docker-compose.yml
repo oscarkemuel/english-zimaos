@@ -5,10 +5,10 @@ services:
     container_name: curso-server
     environment:
       VIDEOS_DIR: /app/videos
-      BACKUP_FILE: /app/data/backup.json
+      DATABASE_FILE: /app/data/english.sqlite
     volumes:
       - /DATA/.media/HDD01/English/videos:/app/videos:ro
-      - ./backup.json:/app/data/backup.json
+      - ./data:/app/data
     restart: unless-stopped
 
   web:

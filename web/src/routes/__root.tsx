@@ -1,10 +1,15 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import type { AuthContext } from "@/contexts/auth";
 import { ModulesProvider } from "@/hooks/useModules";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-const RootLayout = () => (
+interface MyRouterContext {
+  auth: AuthContext
+}
+
+export const Route = createRootRoute<MyRouterContext>({ component: () => (
   <TooltipProvider>
     <ModulesProvider>
       <main className="min-h-screen w-[calc(100vw)] dark bg-background text-foreground">
@@ -14,6 +19,4 @@ const RootLayout = () => (
       <TanStackRouterDevtools />
     </ModulesProvider>
   </TooltipProvider>
-);
-
-export const Route = createRootRoute({ component: RootLayout });
+), });

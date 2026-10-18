@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useModules } from "@/hooks/useModules";
 
-export const Route = createFileRoute("/stages/$stage/")({
+export const Route = createFileRoute("/_auth/stages/$stage/")({
   component: RouteComponent,
 });
 

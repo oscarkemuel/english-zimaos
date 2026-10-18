@@ -9,6 +9,8 @@
 .env
 **/.env
 
+data/
+
 # dados locais
 curso_ingles.json
 backup.json
