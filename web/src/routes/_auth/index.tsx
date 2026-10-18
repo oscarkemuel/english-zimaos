@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import YoutubeButton from "../-components/YoutubeButton";
 import { useAuthContext } from "@/contexts/auth";
 import LogoutButton from "../-components/LogoutButton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/_auth/")({
   component: Index,
@@ -41,9 +42,18 @@ function Index() {
 
   if (isLoadingBackup) {
     return (
-      <div className="p-8 max-w-7xl mx-auto flex items-center justify-center min-h-100">
-        <p className="text-zinc-400 animate-pulse">Syncing data...</p>
+      <div className="p-8 max-w-7xl mx-auto flex flex-col gap-8 w-full">
+        <Skeleton className="w-full h-36.5" />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Skeleton className="w-full h-61.5" />
+        <Skeleton className="w-full h-61.5" />
       </div>
+
+      <div className="w-full">
+        <Skeleton className="w-full h-65.5" />
+      </div>
+    </div>
     );
   }
 

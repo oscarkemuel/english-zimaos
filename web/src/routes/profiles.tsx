@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/avatar";
 import type { IUser } from "@/types/user";
 import { useAuthContext } from "@/contexts/auth";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/profiles")({
   beforeLoad: ({ context }) => {
@@ -90,9 +91,10 @@ function ProfilesPage() {
         </header>
 
         {loading ? (
-          <p className="animate-pulse text-zinc-400">
-            Loading profiles...
-          </p>
+          <div className="flex w-full justify-center gap-x-6 gap-y-8 sm:gap-x-10">
+            <Skeleton className="h-54 w-40" />
+            <Skeleton className="h-54 w-40" />
+          </div>
         ) : error ? (
           <div className="flex flex-col items-center gap-4 text-center">
             <p className="text-sm text-red-400">{error}</p>
