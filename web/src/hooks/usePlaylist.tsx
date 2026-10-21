@@ -1,5 +1,6 @@
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import useLocalStorage from "./useLocalStorage";
+import useBackup from "./useBackup";
 
 interface AudioClip {
   title: string;
@@ -9,17 +10,20 @@ interface AudioClip {
 const usePlaylist = () => {
   const { AUDIO_PLAYLIST } = LOCAL_STORAGE_KEYS;
   const [playlist, setPlaylist] = useLocalStorage(AUDIO_PLAYLIST, []);
+  const { backupLocalStorage } = useBackup()
 
   const typedPlaylist = playlist as AudioClip[];
 
   const addToPlaylist = (clip: AudioClip) => {
     const updatedPlaylist = [...typedPlaylist, clip];
     setPlaylist(updatedPlaylist);
+    backupLocalStorage();
   };
 
   const removeFromPlaylist = (url: string) => {
     const updatedPlaylist = typedPlaylist.filter((clip) => clip.url !== url);
     setPlaylist(updatedPlaylist);
+    backupLocalStorage();
   };
 
   const hasAudioInPlaylist = (url: string) => {
@@ -28,6 +32,7 @@ const usePlaylist = () => {
 
   const clearPlaylist = () => {
     setPlaylist([]);
+    backupLocalStorage();
   };
 
   return {
