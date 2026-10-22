@@ -42,6 +42,11 @@ const pwaManifest: Partial<VitePWAOptions> = {
   devOptions: {
     enabled: true,
   },
+  workbox: {
+    navigateFallbackDenylist: [
+      /^\/videos\//,
+    ]
+  }
 }
 
 // https://vite.dev/config/
