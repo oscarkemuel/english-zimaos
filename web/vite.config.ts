@@ -44,7 +44,8 @@ const pwaManifest: Partial<VitePWAOptions> = {
   },
   workbox: {
     navigateFallbackDenylist: [
-      /^\/videos\//,
+      /^\/videos(?:\/|$)/,
+      /\.(?:pdf|apkg|mp3|mp4|txt|png|jpe?g|zip)$/i,
     ]
   }
 }
