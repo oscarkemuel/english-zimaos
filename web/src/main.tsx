@@ -7,6 +7,9 @@ import "./index.css";
 
 import { routeTree } from "./routeTree.gen";
 import { AuthProvider, useAuthContext } from "./contexts/auth";
+import { registerSW } from "virtual:pwa-register";
+
+registerSW({ immediate: true })
 
 const router = createRouter({
   routeTree,
