@@ -7,6 +7,7 @@ import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa";
 
 const pwaManifest: Partial<VitePWAOptions> = {
   registerType: "autoUpdate",
+  useCredentials: true,
   includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
   manifest: {
     name: "English Course",
