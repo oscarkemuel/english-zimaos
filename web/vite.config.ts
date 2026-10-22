@@ -47,6 +47,13 @@ const pwaManifest: Partial<VitePWAOptions> = {
       /^\/$/,
       /^\/stages\/\d+\/module\/\d+\/?$/,
     ],
+
+    runtimeCaching: [
+      {
+        urlPattern: ({ url }) => url.pathname.startsWith("/videos/"),
+        handler: "NetworkOnly",
+      },
+    ],
   },
 }
 
